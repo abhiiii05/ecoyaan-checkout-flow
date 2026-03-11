@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ecoyaan Checkout
 
-## Getting Started
+An eco-friendly e-commerce checkout built with Next.js.
 
-First, run the development server:
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run locally
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## The Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 16** - App router, React Server Components where possible
+- **React Hook Form + Zod** - Form handling with schema validation
+- **Context API** - Simple state management for checkout flow
+- **Tailwind CSS** - Utility-first styling
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/
+│   ├── page.tsx              # Landing page
+│   ├── cart/page.tsx         # Shopping cart
+│   ├── checkout/
+│   │   ├── shipping/         # Address form
+│   │   └── payments/        # Payment & order summary
+│   └── success/              # Order confirmed
+├── context/
+│   └── checkoutContext.tsx   # Holds shipping address across pages
+├── lib/
+│   ├── cart.ts               # Cart data fetching
+│   ├── calc.ts               # Price calculations
+│   └── validation/           # Zod schemas
+└── types/
+    └── checkout.ts           # TypeScript interfaces
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How It Works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. User lands on home page → clicks to cart
+2. Cart shows items → proceeds to checkout
+3. Shipping form validates via Zod → saves to context
+4. Payment page shows address + order summary → confirms order
+5. Success page after payment
 
-## Deploy on Vercel
+The context saves address so if user goes back and forth, data persists.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Production build works better than dev (Turbopack issues on some machines)
+- Run `npm run build && npm run start` for production
+- API endpoint at `/api/cart` returns mock cart data
